@@ -2,9 +2,7 @@ package com.ab.ch1.client;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelHandler;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.util.CharsetUtil;
 
 @ChannelHandler.Sharable
@@ -45,6 +43,15 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
      **/
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+//        ChannelFuture write = ctx.channel().write("");
+//        write.addListener(new ChannelFutureListener() {
+//            @Override
+//            public void operationComplete(ChannelFuture future) throws Exception {
+//                if(future.isSuccess()){
+//                    System.out.println("success");
+//                }
+//            }
+//        });
         cause.printStackTrace();
         ctx.close();
 //        super.exceptionCaught(ctx, cause);
