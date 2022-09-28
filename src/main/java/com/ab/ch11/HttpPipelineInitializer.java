@@ -3,10 +3,7 @@ package com.ab.ch11;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
-import io.netty.handler.codec.http.HttpRequestDecoder;
-import io.netty.handler.codec.http.HttpRequestEncoder;
-import io.netty.handler.codec.http.HttpResponseDecoder;
-import io.netty.handler.codec.http.HttpResponseEncoder;
+import io.netty.handler.codec.http.*;
 
 /**
  * @Description HTTP 支持
@@ -33,6 +30,8 @@ public class HttpPipelineInitializer extends ChannelInitializer<Channel> {
 //            是服务器
             pipeline.addLast("httpDecoder", new HttpRequestDecoder());
             pipeline.addLast("httpEncoder", new HttpResponseEncoder());
+            pipeline.addLast("aggregator", new HttpObjectAggregator(512 * 1024));
+            pipeline.addLast("customHttpHandler", new CustomHttpHandler());
         }
     }
 }
