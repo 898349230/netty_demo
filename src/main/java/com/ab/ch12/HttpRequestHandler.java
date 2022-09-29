@@ -49,6 +49,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
      **/
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, FullHttpRequest request) throws Exception {
+        System.out.println("[HttpRequestHandler] [channelRead0]");
         //如果请求了 WebSocket协议升级，则增加引用计数（调用 retain()方法）并将它传递给下一个ChannelInboundHandler
         if (wsUri.equalsIgnoreCase(request.getUri())) {
 //            通过调用 fireChannelRead(msg)方法将它转发给下一个 ChannelInboundHandler
@@ -62,7 +63,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
 //            读取 index.html
             RandomAccessFile file = new RandomAccessFile(INDEX, "r");
             DefaultHttpResponse response = new DefaultHttpResponse(request.getProtocolVersion(), HttpResponseStatus.OK);
-            response.headers().set(HttpHeaders.Names.CONTENT_TYPE, "text/plain; charset=UTF-8");
+            response.headers().set(HttpHeaders.Names.CONTENT_TYPE, "text/html; charset=UTF-8");
             boolean keepAlive = HttpHeaders.isKeepAlive(request);
 //            如果请求了 keep-alive，则添加所需要的HTTP头信息
             if (keepAlive) {
